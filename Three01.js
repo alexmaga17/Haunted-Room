@@ -90,13 +90,14 @@ import * as THREE from './libs/three.module.js';
 
             // PAREDE 4 //
 
+            
 
             // DOOR //
             
             let geometryDoor = new THREE.PlaneGeometry();
             let materialDoor = new THREE.MeshBasicMaterial({});
             let door = new THREE.Mesh(geometryDoor, materialDoor);
-            
+
 
 
             // ANIMAR //
@@ -120,13 +121,24 @@ import * as THREE from './libs/three.module.js';
                 if(key == "d" || key == "D"){
                     moveRight = true;
                 }
+
+
+                
                 if(key == "ArrowUp"){
-                    camera.position.y += 2;
-                    console.log(camera.position.y)
+                    camera.rotation.x += 0.06;
+                    console.log(camera.rotation.x)
                 }
                 if(key == "ArrowDown"){
-                    camera.position.y -= 2;
-                    console.log(camera.position.y)
+                    camera.rotation.x -= 0.06;
+                    console.log(camera.rotation.x)
+                }
+                if(key == "ArrowRight"){
+                    camera.rotation.y -= 0.06;
+                    console.log(camera.rotation.y)
+                }
+                if(key == "ArrowLeft"){
+                    camera.rotation.y += 0.06;
+                    console.log(camera.rotation.y)
                 }
             }
 
