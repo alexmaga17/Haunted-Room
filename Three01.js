@@ -53,13 +53,13 @@ import * as THREE from './libs/three.module.js';
             
 
             // TETO //
-            let geometryRoof = new THREE.PlaneGeometry(50, 50);
+            let geometryRoof = new THREE.PlaneGeometry(50, 80);
             let materialRoof = new THREE.MeshBasicMaterial({ map: ceiling });
             let roof = new THREE.Mesh(geometryRoof, materialRoof);
             roof.rotation.x = Math.PI / 2;
             roof.name = "roof";
             scene.add(roof);
-            roof.position.set(0,13,10);
+            roof.position.set(0,14,3);
 
             // PAREDE 1 //
             let geometryWall1 = new THREE.PlaneGeometry(80, 14);
@@ -86,7 +86,17 @@ import * as THREE from './libs/three.module.js';
             wall3.rotation.z =  -Math.PI / 2;
             wall3.name = "wall3";
             scene.add(wall3);
-            wall3.position.set(25,7,-45);
+            wall3.position.set(0,7,-37);
+
+            // PAREDE 4 //
+
+
+            // DOOR //
+            
+            let geometryDoor = new THREE.PlaneGeometry();
+            let materialDoor = new THREE.MeshBasicMaterial({});
+            let door = new THREE.Mesh(geometryDoor, materialDoor);
+            
 
 
             // ANIMAR //
@@ -98,16 +108,16 @@ import * as THREE from './libs/three.module.js';
             function handleKeyDown(e){
                 let key = e.key;
 
-                if(key == "w"){
+                if(key == "w" || key == "W"){
                     moveForward = true;
                 }
-                if(key == "s"){
+                if(key == "s" || key == "S"){
                     moveBack = true;
                 }
-                if(key == "a"){
+                if(key == "a" || key == "A"){
                     moveLeft = true;
                 }
-                if(key == "d"){
+                if(key == "d" || key == "D"){
                     moveRight = true;
                 }
                 if(key == "ArrowUp"){
