@@ -32,7 +32,7 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
         scene = new THREE.Scene();
 
             const aspect = window.innerWidth / window.innerHeight;
-            camera = new THREE.PerspectiveCamera(75, aspect, 0.001, 250);
+            camera = new THREE.PerspectiveCamera(90, aspect, 0.001, 250);
             camera.position.x = camera.position.y = 2; // place the camera using world coordinates
             camera.position.set(0,5,10);
             camera.position.z = 10;
@@ -44,7 +44,7 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
             // add the output of the renderer to an HTML element (adds a Canvas element to the body)
             document.body.appendChild(renderer.domElement);
 
-            let light = new THREE.AmbientLight(0x404040, 20); // soft white light
+            let light = new THREE.AmbientLight(0x404040, 10); // soft white light
             scene.add( light );
 
             // let light2 = new THREE.DirectionalLight(0xFFFFFF, 1.0);
@@ -117,11 +117,38 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
             // LAMPADA //
             const loader = new GLTFLoader();
             loader.load('./textures/lamp_ceiling_-_fnaf/scene.gltf', function(gltf){
-                //scene.add(gltf.scene);
-                const mesh = gltf.scene;
-                mesh.position.set(0,11.5,-6);
-                mesh.scale.set(0.008,0.008,0.008)
-                scene.add(mesh);
+                const lamp = gltf.scene;
+                lamp.position.set(0,11.5,-6);
+                lamp.scale.set(0.008,0.008,0.008)
+                scene.add(lamp);
+            }, function(xhr){
+                console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+            }, function(error){
+                console.log("error")
+            });
+
+            // MESA //
+            const loader2 = new GLTFLoader();
+            loader2.load('./textures/mesa/scene.gltf', function(gltf){
+                const mesa = gltf.scene;
+                mesa.position.set(-23,1.5,-6);
+                mesa.scale.set(3.5,3.5,3.5);
+                // mesa.rotation.y =  - Math.PI / 2;
+                scene.add(mesa);
+            }, function(xhr){
+                console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+            }, function(error){
+                console.log("error")
+            });
+
+            // CADEIRA //
+            const loader3 = new GLTFLoader();
+            loader3.load('./textures/cadeira/scene.gltf', function(gltf){
+                const cadeira = gltf.scene;
+                cadeira.position.set(-16,1.5,-6);
+                cadeira.scale.set(0.013,0.013,0.013);
+                cadeira.rotation.y =  - Math.PI / 2;
+                scene.add(cadeira);
             }, function(xhr){
                 console.log((xhr.loaded/xhr.total * 100) + "%loaded")
             }, function(error){
