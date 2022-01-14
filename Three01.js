@@ -1,4 +1,5 @@
 import * as THREE from './libs/three.module.js';
+import { GLTFLoader } from './libs/GLTFLoader.js';
 
     let camera, scene, renderer;
     // CHÃO //
@@ -31,7 +32,7 @@ import * as THREE from './libs/three.module.js';
         scene = new THREE.Scene();
 
             const aspect = window.innerWidth / window.innerHeight;
-            camera = new THREE.PerspectiveCamera(75, aspect, 5, 50);
+            camera = new THREE.PerspectiveCamera(75, aspect, 0.001, 250);
             camera.position.x = camera.position.y = 2; // place the camera using world coordinates
             camera.position.set(0,5,10);
             camera.position.z = 10;
@@ -42,6 +43,14 @@ import * as THREE from './libs/three.module.js';
             renderer.setClearColor(0x8a8a8a); // configure clear color (background color)
             // add the output of the renderer to an HTML element (adds a Canvas element to the body)
             document.body.appendChild(renderer.domElement);
+
+            let light = new THREE.AmbientLight(0x404040, 20); // soft white light
+            scene.add( light );
+
+            // let light2 = new THREE.DirectionalLight(0xFFFFFF, 1.0);
+            // light2.position.set(0,-10,-6);
+            // light2.target.position.set(0,-150,-6);
+            // scene.add(light2);
 
             // CHÃO //
             let geometryFloor = new THREE.PlaneGeometry(50, 80);
@@ -89,6 +98,13 @@ import * as THREE from './libs/three.module.js';
             wall3.position.set(0,7,-37);
 
             // PAREDE 4 //
+            let geometryWall4 = new THREE.PlaneGeometry(14, 50);
+            let materialWall4 = new THREE.MeshBasicMaterial({ map: walls });
+            let wall4 = new THREE.Mesh(geometryWall4, materialWall4);
+            wall4.rotation.z =  -Math.PI / 2;
+            wall4.name = "wall4";
+            scene.add(wall4);
+            wall4.position.set(0,5,40);
 
             
 
@@ -98,11 +114,23 @@ import * as THREE from './libs/three.module.js';
             let materialDoor = new THREE.MeshBasicMaterial({});
             let door = new THREE.Mesh(geometryDoor, materialDoor);
 
+            // LAMPADA //
+            const loader = new GLTFLoader();
+            loader.load('./textures/lamp_ceiling_-_fnaf/scene.gltf', function(gltf){
+                //scene.add(gltf.scene);
+                const mesh = gltf.scene;
+                mesh.position.set(0,11.5,-6);
+                mesh.scale.set(0.008,0.008,0.008)
+                scene.add(mesh);
+            }, function(xhr){
+                console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+            }, function(error){
+                console.log("error")
+            });
 
 
             // ANIMAR //
             renderer.setAnimationLoop(render);
-
             document.onkeydown = handleKeyDown;
 
             // KEYS //
@@ -142,33 +170,49 @@ import * as THREE from './libs/three.module.js';
                 }
             }
 
-
     }
 
     function render() {
 
         if(moveForward == true){
-            camera.position.z -= 4;
-            console.log(camera.position.z)
-            moveForward = false;
+            if(camera.position.z <= -32){
+                moveForward = false;
+            }else{
+                camera.position.z -= 2;
+                console.log(camera.position.z)
+                moveForward = false;
+            }
         }
         if(moveBack == true){
-            camera.position.z += 4;
-            console.log(camera.position.z)
-            moveBack = false;
+            if(camera.position.z >= 40){
+                moveBack = false;
+            }else{
+                camera.position.z += 2;
+                console.log(camera.position.z)
+                moveBack = false;
+            }
         }
         if(moveLeft == true){
-            camera.position.x -= 4;
-            console.log(camera.position.x)
-            moveLeft = false;
+            if(camera.position.x <= -22){
+                moveLeft = false;
+            }else{
+                camera.position.x -= 2;
+                console.log(camera.position.x)
+                moveLeft = false;
+            }
         }
         if(moveRight == true){
-            camera.position.x += 4;
-            console.log(camera.position.x)
-            moveRight = false;
+            if(camera.position.x >= 24){
+                moveRight = false;
+            }else{
+                camera.position.x += 2;
+                console.log(camera.position.x)
+                moveRight = false;
+            }
         }
+
         renderer.render(scene, camera);
-        //renderer.requestAnimationFrame(render);
+        //requestAnimationFrame(render);
     }
 
     newScene();
