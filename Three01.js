@@ -1,5 +1,6 @@
 import * as THREE from './libs/three.module.js';
 import { GLTFLoader } from './libs/GLTFLoader.js';
+import { OrbitControls } from './libs/OrbitControls.js'
 
     let camera, scene, renderer;
     // CHÃO //
@@ -136,8 +137,8 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
                 const loader3 = new GLTFLoader();
                 loader3.load('./textures/cadeira/scene.gltf', function(gltf){
                     const cadeira = gltf.scene;
-                    cadeira.position.set(-16,1.5,-6);
-                    cadeira.scale.set(0.013,0.013,0.013);
+                    cadeira.position.set(-20,0,-6);
+                    cadeira.scale.set(0.016,0.016,0.016);
                     cadeira.rotation.y =  - Math.PI / 2;
                     scene.add(cadeira);
                 }, function(xhr){
@@ -161,15 +162,32 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
                     console.log("error")
                 });
             }
+
+            function tv(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/tv/scene.gltf', function(gltf){
+                    const tv = gltf.scene;
+                    tv.position.set(24,0,-6);
+                    tv.scale.set(0.7,0.7,0.7);
+                    tv.rotation.y =  - Math.PI / 2;
+                    scene.add(tv);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+            }
     
     function newScene(){
         scene = new THREE.Scene();
 
             const aspect = window.innerWidth / window.innerHeight;
-            camera = new THREE.PerspectiveCamera(90, aspect, 1.0, 1000);
+            camera = new THREE.PerspectiveCamera(90, aspect, 1.0, 10000);
             camera.position.x = camera.position.y = 2; // place the camera using world coordinates
-            camera.position.set(0,5,10);
+            camera.position.set(0,6,10);
             camera.position.z = 10;
+
+            //controls = new OrbitControls(camera, renderer.domElement);
 
             // RENDERER //
             renderer = new THREE.WebGLRenderer();
@@ -177,9 +195,22 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
             renderer.setClearColor(0x8a8a8a); // configure clear color (background color)
             // add the output of the renderer to an HTML element (adds a Canvas element to the body)
             document.body.appendChild(renderer.domElement);
+            const controls = new OrbitControls(camera, renderer.domElement);
 
-            let light = new THREE.AmbientLight(0x404040, 10); // soft white light
+            controls.keys = {
+                LEFT: 'ArrowLeft', //left arrow
+                UP: 'ArrowUp', // up arrow
+                RIGHT: 'ArrowRight', // right arrow
+                BOTTOM: 'ArrowDown' // down arrow
+            }
+
+            let light = new THREE.AmbientLight(0x404040, 8); // soft white light
             scene.add( light );
+
+            const light2 = new THREE.PointLight( 0xEEEE9B, 10, 40);
+            light2.position.set(0,-10,-6)
+            light2.castShadow = true;
+            scene.add(light2);
 
             // let light2 = new THREE.DirectionalLight(0xFFFFFF, 1.0);
             // light2.position.set(0,-10,-6);
@@ -198,12 +229,16 @@ import { GLTFLoader } from './libs/GLTFLoader.js';
             paredes();
             lampada();
             mesa();
+            tv();
             cadeira();
             janela();
+
 
             // ANIMAR //
             renderer.setAnimationLoop(render);
             document.onkeydown = handleKeyDown;
+            
+
             
 
             // KEYS //
