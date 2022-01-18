@@ -187,31 +187,22 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     console.log("error")
                 });
             }
-
-            // function radio(){
-            //     const loader4 = new GLTFLoader();
-            //     loader4.load('./textures/radio/scene.gltf', function(gltf){
-            //         const radio = gltf.scene;
-            //         radio.position.set(-24,4,-6);
-            //         radio.scale.set(0.9,0.9,0.9);
-            //         radio.rotation.y =  - Math.PI / 2;
-            //         scene.add(radio);
-            //     }, function(xhr){
-            //         console.log((xhr.loaded/xhr.total * 100) + "%loaded")
-            //     }, function(error){
-            //         console.log("error")
-            //     });
-            // }
-
             
             function door(){
+                pivot2 = new THREE.Object3D();
+                pivot2.position.z = -0.3;
+                pivot2.position.x = 1.45;
+                pivot2.rotation.x =  -Math.PI / 2;
+                pivot2.rotation.z = Math.PI / 2;
+                wall4.add(pivot2);
                 const loader4 = new GLTFLoader();
                 loader4.load('./textures/porta/scene.gltf', function(gltf){
                     porta = gltf.scene;
-                    porta.position.set(0,4.7,39.7);
+                    //porta.position.set(0,4.7,39.7);
                     porta.scale.set(3.1,3.1,3.1);
-                    porta.rotation.y = - Math.PI / 2;
-                    scene.add(porta);
+                    // porta.rotation.y = Math.PI/2;
+                    // porta.rotation.z = Math.PI / 2;
+                    pivot2.add(porta);
                 }, function(xhr){
                     console.log((xhr.loaded/xhr.total * 100) + "%loaded")
                 }, function(error){
@@ -316,22 +307,6 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     openDoor = true;
                     //console.log(openPc);
                 }
-                // if(key == "ArrowUp"){
-                //     camera.rotation.x += 0.06;
-                //     console.log(camera.rotation.x)
-                // }
-                // if(key == "ArrowDown"){
-                //     camera.rotation.x -= 0.06;
-                //     console.log(camera.rotation.x)
-                // }
-                // if(key == "ArrowRight"){
-                //     camera.rotation.y -= 0.06;
-                //     console.log(camera.rotation.y)
-                // }
-                // if(key == "ArrowLeft"){
-                //     camera.rotation.y += 0.06;
-                //     console.log(camera.rotation.y)
-                // }
             }
 
     }
