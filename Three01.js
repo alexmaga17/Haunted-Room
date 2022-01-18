@@ -228,6 +228,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
 
                 pivot = new THREE.Object3D();
                 pivot.position.x = -1
+                pivot.rotation.x = Math.PI
                 //pivot.rotation.z = Math.PI / 2;
                 cube1.add(pivot);
 
@@ -309,9 +310,11 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     moveRight = true;
                 }
                 if(key == "t" || key == "T"){
+                    console.log(openPc);
                     openPc = true;
-                    //console.log(openPc);
+                    console.log(openPc);
                 }
+
                 if(key == "e" || key == "E"){
                     openDoor = true;
                     //console.log(openPc);
@@ -374,10 +377,11 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 moveRight = false;
             }
         }
-        if(openPc == true && THREE.Math.radToDeg(pivot.rotation.z) <= 0){
-            pivot.rotation.z -= THREE.Math.radToDeg(-2);
+        if(openPc == true){
+            console.log(openPc);
+            pivot.rotation.z -= 0.01;
             console.log(pivot.rotation.z);            
-            if(THREE.Math.radToDeg(pivot.rotation.z) >= 114.5){
+            if(pivot.rotation.z <= -1.5){
                 console.log(pivot.rotation.z); 
                 openPc = false;
             }    
