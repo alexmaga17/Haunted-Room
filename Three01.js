@@ -100,15 +100,6 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 wall4.name = "wall4";
                 scene.add(wall4);
                 wall4.position.set(0,7,40.5);
-
-                // //ATRAS DA PORTA//
-                // let geometryWall5 = new THREE.PlaneGeometry(5, 8);
-                // let materialWall5 = new THREE.MeshBasicMaterial({ color: "white" , side: THREE.DoubleSide});
-                // let wall5 = new THREE.Mesh(geometryWall5, materialWall5);
-                // wall5.rotation.z =  -Math.PI / 2;
-                // wall5.name = "wall5";
-                // scene.add(wall5);
-                // wall5.position.set(0,7,40);
             }
 
             // LAMPADA //
@@ -190,8 +181,6 @@ import { OrbitControls } from './libs/OrbitControls.js'
             
             function door(){
                 pivot2 = new THREE.Object3D();
-                // pivot2.position.z = -1;
-                // pivot2.position.x = 1.45;
                 pivot2.rotation.x =  -Math.PI / 2;
                 pivot2.rotation.z = Math.PI / 2;
                 wall4.add(pivot2);
@@ -201,8 +190,6 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     porta.position.z= 3;
                     porta.position.y = -1.5;
                     porta.scale.set(3.1,3.1,3.1);
-                    // porta.rotation.y = Math.PI/2;
-                    // porta.rotation.z = Math.PI / 2;
                     pivot2.add(porta);
                 }, function(xhr){
                     console.log((xhr.loaded/xhr.total * 100) + "%loaded")
@@ -215,18 +202,23 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 let geometry1 = new THREE.BoxGeometry(2,0.1,2);
                 let material1 = new THREE.MeshBasicMaterial({ color: "grey"});
                 const cube1 = new THREE.Mesh(geometry1, material1);
-                cube1.position.set(-23,3.5,-6);
+                cube1.position.set(-23,3.3,-6);
                 scene.add(cube1);
+
+                let geometry2 = new THREE.BoxGeometry(1.2,0.03,1.6);
+                let material2 = new THREE.MeshBasicMaterial({ color: "black"});
+                const cube3 = new THREE.Mesh(geometry2, material2);
+                cube3.position.set(-23,3.35,-6);
+                scene.add(cube3);
 
                 pivot = new THREE.Object3D();
                 pivot.position.x = -1
                 pivot.rotation.x = Math.PI
-                //pivot.rotation.z = Math.PI / 2;
                 cube1.add(pivot);
 
-                
-                cube2 = new THREE.Mesh(geometry1, material1);
-                cube2.position.x = +1
+                let geometry3 = new THREE.BoxGeometry(1.9,0.15,2);
+                cube2 = new THREE.Mesh(geometry3, material1);
+                cube2.position.x = +1;
                 pivot.add(cube2);
             }
     
