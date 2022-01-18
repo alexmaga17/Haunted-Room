@@ -101,14 +101,14 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 scene.add(wall4);
                 wall4.position.set(0,7,40.5);
 
-                //ATRAS DA PORTA//
-                let geometryWall5 = new THREE.PlaneGeometry(5, 8);
-                let materialWall5 = new THREE.MeshBasicMaterial({ color: "white" , side: THREE.DoubleSide});
-                let wall5 = new THREE.Mesh(geometryWall5, materialWall5);
-                wall5.rotation.z =  -Math.PI / 2;
-                wall5.name = "wall5";
-                scene.add(wall5);
-                wall5.position.set(0,7,40);
+                // //ATRAS DA PORTA//
+                // let geometryWall5 = new THREE.PlaneGeometry(5, 8);
+                // let materialWall5 = new THREE.MeshBasicMaterial({ color: "white" , side: THREE.DoubleSide});
+                // let wall5 = new THREE.Mesh(geometryWall5, materialWall5);
+                // wall5.rotation.z =  -Math.PI / 2;
+                // wall5.name = "wall5";
+                // scene.add(wall5);
+                // wall5.position.set(0,7,40);
             }
 
             // LAMPADA //
@@ -190,15 +190,16 @@ import { OrbitControls } from './libs/OrbitControls.js'
             
             function door(){
                 pivot2 = new THREE.Object3D();
-                pivot2.position.z = -0.3;
-                pivot2.position.x = 1.45;
+                // pivot2.position.z = -1;
+                // pivot2.position.x = 1.45;
                 pivot2.rotation.x =  -Math.PI / 2;
                 pivot2.rotation.z = Math.PI / 2;
                 wall4.add(pivot2);
                 const loader4 = new GLTFLoader();
                 loader4.load('./textures/porta/scene.gltf', function(gltf){
                     porta = gltf.scene;
-                    //porta.position.set(0,4.7,39.7);
+                    porta.position.z= 3;
+                    porta.position.y = -1.5;
                     porta.scale.set(3.1,3.1,3.1);
                     // porta.rotation.y = Math.PI/2;
                     // porta.rotation.z = Math.PI / 2;
@@ -361,11 +362,12 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 openPc = false;
             }    
         }
-        if(openDoor == true && THREE.Math.radToDeg(porta.rotation.y) <= -90){
-            porta.rotation.y -= THREE.Math.radToDeg(-2);
-            console.log(porta.rotation.y);            
-            if(THREE.Math.radToDeg(porta.rotation.y) >= 114.5){
-                console.log(porta.rotation.y); 
+        if(openDoor == true && pivot2.rotation.x >= -3.15){
+            console.log(openDoor);
+            pivot2.rotation.x -= 0.01;
+            console.log(pivot2.rotation.x);           
+            if(pivot2.rotation.x <= -3.2){
+                console.log(pivot2.rotation.x); 
                 openDoor = false;
             }    
         }
