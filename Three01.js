@@ -18,11 +18,20 @@ import { OrbitControls } from './libs/OrbitControls.js'
     walls.repeat.set(1.5,1,5);
     walls.wrapS = walls.wrapT = THREE.MirroredRepeatWrapping;
 
+    // PORTA E PC //
+    let cube2;
+    let pivot;
+    let wall4;
+    let porta;
+    let pivot2;
+
     // TECLAS //
     let moveForward = false;
     let moveBack = false;
     let moveLeft = false;
     let moveRight = false;
+    let openPc = false;
+    let openDoor = false;
     
 
     window.onload = function init() {
@@ -85,21 +94,22 @@ import { OrbitControls } from './libs/OrbitControls.js'
 
                 // PAREDE 4 //
                 let geometryWall4 = new THREE.PlaneGeometry(14, 50);
-                let materialWall4 = new THREE.MeshBasicMaterial({ map: walls });
-                let wall4 = new THREE.Mesh(geometryWall4, materialWall4);
+                let materialWall4 = new THREE.MeshBasicMaterial({ map: walls , side: THREE.DoubleSide});
+                wall4 = new THREE.Mesh(geometryWall4, materialWall4);
                 wall4.rotation.z =  -Math.PI / 2;
                 wall4.name = "wall4";
                 scene.add(wall4);
-                wall4.position.set(0,5,40);
+                wall4.position.set(0,7,40.5);
+
+                //ATRAS DA PORTA//
+                let geometryWall5 = new THREE.PlaneGeometry(5, 8);
+                let materialWall5 = new THREE.MeshBasicMaterial({ color: "white" , side: THREE.DoubleSide});
+                let wall5 = new THREE.Mesh(geometryWall5, materialWall5);
+                wall5.rotation.z =  -Math.PI / 2;
+                wall5.name = "wall5";
+                scene.add(wall5);
+                wall5.position.set(0,7,40);
             }
-
-            
-
-            // DOOR //
-            
-            let geometryDoor = new THREE.PlaneGeometry();
-            let materialDoor = new THREE.MeshBasicMaterial({});
-            let door = new THREE.Mesh(geometryDoor, materialDoor);
 
             // LAMPADA //
             function lampada(){
@@ -177,23 +187,77 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     console.log("error")
                 });
             }
+
+            // function radio(){
+            //     const loader4 = new GLTFLoader();
+            //     loader4.load('./textures/radio/scene.gltf', function(gltf){
+            //         const radio = gltf.scene;
+            //         radio.position.set(-24,4,-6);
+            //         radio.scale.set(0.9,0.9,0.9);
+            //         radio.rotation.y =  - Math.PI / 2;
+            //         scene.add(radio);
+            //     }, function(xhr){
+            //         console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+            //     }, function(error){
+            //         console.log("error")
+            //     });
+            // }
+
+            
+            function door(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/porta/scene.gltf', function(gltf){
+                    porta = gltf.scene;
+                    porta.position.set(0,4.7,39.7);
+                    porta.scale.set(3.1,3.1,3.1);
+                    porta.rotation.y = - Math.PI / 2;
+                    scene.add(porta);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+            }
+            
+            function pc(){
+                let geometry1 = new THREE.BoxGeometry(2,0.1,2);
+                let material1 = new THREE.MeshBasicMaterial({ color: "grey"});
+                const cube1 = new THREE.Mesh(geometry1, material1);
+                cube1.position.set(-23,3.5,-6);
+                scene.add(cube1);
+
+                pivot = new THREE.Object3D();
+                pivot.position.x = -1
+                //pivot.rotation.z = Math.PI / 2;
+                cube1.add(pivot);
+
+                
+                cube2 = new THREE.Mesh(geometry1, material1);
+                cube2.position.x = +1
+                pivot.add(cube2);
+            }
     
     function newScene(){
         scene = new THREE.Scene();
 
             const aspect = window.innerWidth / window.innerHeight;
-            camera = new THREE.PerspectiveCamera(90, aspect, 1.0, 10000);
+            camera = new THREE.PerspectiveCamera(90, aspect, 1.0, 1000);
             camera.position.x = camera.position.y = 2; // place the camera using world coordinates
             camera.position.set(0,6,10);
             camera.position.z = 10;
-
-            //controls = new OrbitControls(camera, renderer.domElement);
 
             // RENDERER //
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight); // set output canvas and viewport size
             renderer.setClearColor(0x8a8a8a); // configure clear color (background color)
             // add the output of the renderer to an HTML element (adds a Canvas element to the body)
+            window.addEventListener('resize', function(){
+                let width = window.innerWidth;
+                let height = window.innerHeight;
+                renderer.setSize(width,height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
             document.body.appendChild(renderer.domElement);
             const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -204,7 +268,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 BOTTOM: 'ArrowDown' // down arrow
             }
 
-            let light = new THREE.AmbientLight(0x404040, 8); // soft white light
+            let light = new THREE.AmbientLight(0x404040, 9); // soft white light
             scene.add( light );
 
             const light2 = new THREE.PointLight( 0xEEEE9B, 10, 40);
@@ -212,18 +276,6 @@ import { OrbitControls } from './libs/OrbitControls.js'
             light2.castShadow = true;
             scene.add(light2);
 
-            // let light2 = new THREE.DirectionalLight(0xFFFFFF, 1.0);
-            // light2.position.set(0,-10,-6);
-            // light2.target.position.set(0,-150,-6);
-            // scene.add(light2);
-            // let geometry1 = new THREE.BoxGeometry(30, 51.8, 30);
-            // let material1 = new THREE.MeshBasicMaterial({ color: 0x008800, transparent: true, opacity: 0.0000001, name: "CameraBox" });
-            // cameraBox = new THREE.Mesh(geometry1, material1);
-            // cameraBox.rotation.y = Math.PI;
-            // cameraBox.position.set(0, 0, 100);
-            // scene.add(cameraBox);
-        
-            // cameraBox.geometry.computeBoundingBox();
             chao();
             teto();
             paredes();
@@ -231,15 +283,14 @@ import { OrbitControls } from './libs/OrbitControls.js'
             mesa();
             tv();
             cadeira();
+            pc();
+            door();
             janela();
 
 
             // ANIMAR //
             renderer.setAnimationLoop(render);
             document.onkeydown = handleKeyDown;
-            
-
-            
 
             // KEYS //
             function handleKeyDown(e){
@@ -257,22 +308,30 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 if(key == "d" || key == "D"){
                     moveRight = true;
                 }
-                if(key == "ArrowUp"){
-                    camera.rotation.x += 0.06;
-                    console.log(camera.rotation.x)
+                if(key == "t" || key == "T"){
+                    openPc = true;
+                    //console.log(openPc);
                 }
-                if(key == "ArrowDown"){
-                    camera.rotation.x -= 0.06;
-                    console.log(camera.rotation.x)
+                if(key == "e" || key == "E"){
+                    openDoor = true;
+                    //console.log(openPc);
                 }
-                if(key == "ArrowRight"){
-                    camera.rotation.y -= 0.06;
-                    console.log(camera.rotation.y)
-                }
-                if(key == "ArrowLeft"){
-                    camera.rotation.y += 0.06;
-                    console.log(camera.rotation.y)
-                }
+                // if(key == "ArrowUp"){
+                //     camera.rotation.x += 0.06;
+                //     console.log(camera.rotation.x)
+                // }
+                // if(key == "ArrowDown"){
+                //     camera.rotation.x -= 0.06;
+                //     console.log(camera.rotation.x)
+                // }
+                // if(key == "ArrowRight"){
+                //     camera.rotation.y -= 0.06;
+                //     console.log(camera.rotation.y)
+                // }
+                // if(key == "ArrowLeft"){
+                //     camera.rotation.y += 0.06;
+                //     console.log(camera.rotation.y)
+                // }
             }
 
     }
@@ -314,6 +373,22 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 console.log(camera.position.x)
                 moveRight = false;
             }
+        }
+        if(openPc == true && THREE.Math.radToDeg(pivot.rotation.z) <= 0){
+            pivot.rotation.z -= THREE.Math.radToDeg(-2);
+            console.log(pivot.rotation.z);            
+            if(THREE.Math.radToDeg(pivot.rotation.z) >= 114.5){
+                console.log(pivot.rotation.z); 
+                openPc = false;
+            }    
+        }
+        if(openDoor == true && THREE.Math.radToDeg(porta.rotation.y) <= -90){
+            porta.rotation.y -= THREE.Math.radToDeg(-2);
+            console.log(porta.rotation.y);            
+            if(THREE.Math.radToDeg(porta.rotation.y) >= 114.5){
+                console.log(porta.rotation.y); 
+                openDoor = false;
+            }    
         }
 
         renderer.render(scene, camera);

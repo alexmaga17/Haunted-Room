@@ -1,0 +1,11 @@
+Model Information:
+* title:	Old Metal Door (low-poly)
+* source:	https://sketchfab.com/3d-models/old-metal-door-low-poly-f270002288da406ab5c8150e95577223
+* author:	DOMNIN (https://sketchfab.com/DOMNIN)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Old Metal Door (low-poly)" (https://sketchfab.com/3d-models/old-metal-door-low-poly-f270002288da406ab5c8150e95577223) by DOMNIN (https://sketchfab.com/DOMNIN) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
