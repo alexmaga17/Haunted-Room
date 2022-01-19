@@ -24,6 +24,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
     let wall4;
     let porta;
     let pivot2;
+    let switcher;
 
     // TECLAS //
     let moveForward = false;
@@ -31,7 +32,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
     let moveLeft = false;
     let moveRight = false;
     let openPc = false;
-    let openDoor = false;
+    let switchDoor = false;
     
 
     window.onload = function init() {
@@ -169,7 +170,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 loader4.load('./textures/tv/scene.gltf', function(gltf){
                     const tv = gltf.scene;
                     tv.position.set(24,0,-6);
-                    tv.scale.set(0.7,0.7,0.7);
+                    tv.scale.set(0.75,0.75,0.75);
                     tv.rotation.y =  - Math.PI / 2;
                     scene.add(tv);
                 }, function(xhr){
@@ -221,6 +222,117 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 cube2.position.x = +1;
                 pivot.add(cube2);
             }
+
+            function alavanca(){
+                let geometry1 = new THREE.BoxGeometry(1.5,0.3,2);
+                let material1 = new THREE.MeshBasicMaterial({ color: "#808080"});
+                const cube1 = new THREE.Mesh(geometry1, material1);
+                cube1.rotation.x =  -Math.PI/2;
+                cube1.position.set(7,7,40.3);
+                scene.add(cube1);
+
+                let geometry2 = new THREE.BoxGeometry(0.5,0.3,0.4);
+                let material2 = new THREE.MeshBasicMaterial({ color: "black", roughness: 2.5});
+                switcher = new THREE.Mesh(geometry2, material2);
+                switcher.position.set(7,7.55,40);
+                scene.add(switcher);
+            }
+
+            function tapete(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/tapete2/scene.gltf', function(gltf){
+                    const tapete = gltf.scene;
+                    tapete.position.set(0,0.2,-5);
+                    tapete.scale.set(10,10,11);
+                    tapete.rotation.y =  - Math.PI / 2;
+                    scene.add(tapete);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
+
+            function sofa(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/sofa/scene.gltf', function(gltf){
+                    const sofa = gltf.scene;
+                    sofa.position.set(0,0.15,-10);
+                    sofa.scale.set(0.056,0.056,0.056);
+                    sofa.rotation.y = Math.PI / 4;
+                    scene.add(sofa);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
+
+            function planta(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/planta/scene.gltf', function(gltf){
+                    const planta = gltf.scene;
+                    planta.position.set(-22,5.1,-34);
+                    planta.scale.set(2.2,2.2,2.2);
+                    //planta.rotation.y = Math.PI / 4;
+                    scene.add(planta);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
+
+            function movel(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/movel1/scene.gltf', function(gltf){
+                    const movel = gltf.scene;
+                    movel.position.set(-20.3,5,35.8);
+                    movel.scale.set(5.7,5.7,5.7);
+                    movel.rotation.y = Math.PI - Math.PI/4;
+                    scene.add(movel);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
+
+            function piano(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/piano/scene.gltf', function(gltf){
+                    const piano = gltf.scene;
+                    piano.position.set(22.5,0,28);
+                    piano.scale.set(7,7,7);
+                    piano.rotation.y = -Math.PI/2;
+                    scene.add(piano);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
+
+            function quadro(){
+                const loader4 = new GLTFLoader();
+                loader4.load('./textures/quadro/scene.gltf', function(gltf){
+                    const quadro = gltf.scene;
+                    quadro.position.set(-26.7,10,12);
+                    quadro.scale.set(0.005,0.005,0.005);
+                    quadro.rotation.y = Math.PI / 2;
+                    scene.add(quadro);
+                }, function(xhr){
+                    console.log((xhr.loaded/xhr.total * 100) + "%loaded")
+                }, function(error){
+                    console.log("error")
+                });
+
+            }
     
     function newScene(){
         scene = new THREE.Scene();
@@ -253,7 +365,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 BOTTOM: 'ArrowDown' // down arrow
             }
 
-            let light = new THREE.AmbientLight(0x404040, 9); // soft white light
+            let light = new THREE.AmbientLight(0x404040, 6); // soft white light
             scene.add( light );
 
             const light2 = new THREE.PointLight( 0xEEEE9B, 10, 40);
@@ -262,6 +374,8 @@ import { OrbitControls } from './libs/OrbitControls.js'
             scene.add(light2);
 
             chao();
+            tapete();
+            sofa();
             teto();
             paredes();
             lampada();
@@ -269,8 +383,13 @@ import { OrbitControls } from './libs/OrbitControls.js'
             tv();
             cadeira();
             pc();
+            alavanca();
             door();
+            movel();
+            piano();
+            quadro();
             janela();
+            planta();
 
 
             // ANIMAR //
@@ -294,14 +413,14 @@ import { OrbitControls } from './libs/OrbitControls.js'
                     moveRight = true;
                 }
                 if(key == "t" || key == "T"){
-                    console.log(openPc);
-                    openPc = true;
-                    console.log(openPc);
+                    openPc = true; 
                 }
-
                 if(key == "e" || key == "E"){
                     openDoor = true;
                     //console.log(openPc);
+                }
+                if(key == "y" || key == "Y"){
+                    switchDoor = true;
                 }
             }
 
@@ -354,14 +473,26 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 openPc = false;
             }    
         }
-        if(openDoor == true && pivot2.rotation.x >= -3.15){
-            console.log(openDoor);
-            pivot2.rotation.x -= 0.01;
-            console.log(pivot2.rotation.x);           
-            if(pivot2.rotation.x <= -3.2){
-                console.log(pivot2.rotation.x); 
-                openDoor = false;
-            }    
+        // if(openDoor == true && pivot2.rotation.x >= -3.15){
+        //     console.log(openDoor);
+        //     pivot2.rotation.x -= 0.01;
+        //     console.log(pivot2.rotation.x);           
+        //     if(pivot2.rotation.x <= -3.2){
+        //         console.log(pivot2.rotation.x); 
+        //         openDoor = false;
+        //     }    
+        // }
+        if(switchDoor == true){
+            switcher.position.y -= 0.025;
+            if(switcher.position.y <=6.35){
+                switcher.position.y =6.35;
+                if(pivot2.rotation.x >= -3.15){
+                    pivot2.rotation.x -= 0.01;
+                    if(pivot2.rotation.x <= -3.2){
+                        switchDoor = false;
+                    }
+                }
+            }
         }
 
         renderer.render(scene, camera);
