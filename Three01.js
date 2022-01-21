@@ -221,6 +221,18 @@ import { OrbitControls } from './libs/OrbitControls.js'
                 cube2 = new THREE.Mesh(geometry3, material1);
                 cube2.position.x = +1;
                 pivot.add(cube2);
+
+                let warn = new THREE.TextureLoader().load("textures/cena.jpg");
+                warn.repeat.set(1,1);
+                warn.wrapS = warn.wrapT = THREE.MirroredRepeatWrapping;
+                let geometry4 = new THREE.BoxGeometry(1.8,0.13,1.8);
+                let material4 = new THREE.MeshBasicMaterial({ map: warn});
+                const cube4 = new THREE.Mesh(geometry4, material4)
+                cube4.rotation.y = -Math.PI /2;
+                cube4.position.x = +1;
+                cube4.position.y = +0.03;
+                pivot.add(cube4);
+
             }
 
             function alavanca(){
@@ -471,6 +483,7 @@ import { OrbitControls } from './libs/OrbitControls.js'
             if(pivot.rotation.z <= -1.5){
                 console.log(pivot.rotation.z); 
                 openPc = false;
+                alert("Pressione Y para ativar a alavanca");
             }    
         }
         // if(openDoor == true && pivot2.rotation.x >= -3.15){
